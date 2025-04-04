@@ -33,6 +33,10 @@ build/
 tmp/
 temp/
 
+# invoices
+invoices/
+
+
 # Database files
 *.sqlite
 *.sqlite3

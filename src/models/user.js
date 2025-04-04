@@ -57,15 +57,7 @@ const userSchema = new mongoose.Schema({
 });
 
 // Ensure email is unique before saving
-userSchema.pre('save', async function (next) {
-    if (this.isNew || this.isModified('email')) {
-        const existingUser = await mongoose.models.User.findOne({ email: this.email });
-        if (existingUser) {
-            throw new Error('Email already exists');
-        }
-    }
-    next();
-});
+userSchema.index({ email: 1 }, { unique: true });
 
 const User = mongoose.model("Users", userSchema);
 module.exports = User;

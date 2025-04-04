@@ -22,6 +22,10 @@ const productSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    productNetQuantity: {
+        type: String,
+        required: true,
+    },
     productImage: [{
         type: String,
         required: true,
@@ -46,7 +50,10 @@ const productSchema = new mongoose.Schema({
     ],
     productChart: {
         type: String,
-    }
+    },
+    combo: {
+        type: String,
+    },
 })
 
 const Product = mongoose.model("Products", productSchema);

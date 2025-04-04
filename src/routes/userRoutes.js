@@ -1,6 +1,6 @@
 const express = require("express");
-const { createUser, getUsers, updateUser } = require("../controllers/userController");
-
+const { createUser, getUser, getAllUsers, updateUser, sentNewsLetter, whatAppOtp } = require("../controllers/userController");
+const verifyToken = require("../middleware/authmiddleware");
 const router = express.Router();
 
 /**
@@ -55,6 +55,8 @@ const router = express.Router();
  */
 router.post("/create-user", createUser);
 
+router.get("/get-user", verifyToken, getUser);
+
 /**
  * @swagger
  * /api/user/get-all-user:
@@ -68,7 +70,7 @@ router.post("/create-user", createUser);
  *       500:
  *         description: Server error
  */
-router.get("/get-all-user", getUsers);
+router.get("/get-all-user", verifyToken, getAllUsers);
 
 /**
  * @swagger
@@ -126,6 +128,9 @@ router.get("/get-all-user", getUsers);
  *       404:
  *         description: User not found
  */
-router.put("/update-user", updateUser);
+router.put("/update-user", verifyToken, updateUser);
+
+router.post("/sent-newsletter", sentNewsLetter)
+router.post("/whatApp-otp", whatAppOtp)
 
 module.exports = router;
