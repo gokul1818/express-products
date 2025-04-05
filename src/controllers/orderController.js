@@ -64,6 +64,7 @@ const createOrder = async (req, res) => {
 
         // ✅ Validate User
         const user = await Users.findOne({ id: userId });
+        console.log('user: ', user);
         if (!user) {
             return res.status(404).json({ message: "User not found" });
         }
@@ -77,6 +78,8 @@ const createOrder = async (req, res) => {
             productsDetails,
             shippingAddress,
             orderId,
+            userName: user.name,
+            userEmail: user.email,
             totalPrice,
             orderStatus: "Pending",
             paymentMethod,
@@ -85,7 +88,7 @@ const createOrder = async (req, res) => {
         });
 
         await newOrder.save();
-
+        console.log('newOrder: ', newOrder);
         // ✅ Generate Invoice PDF
         const pdfBuffer = await generateInvoice(newOrder);
         console.log("PDF Generated Successfully");

@@ -10,6 +10,12 @@ ordersSchema = mongoose.Schema({
         type: String,
         required: true,
     },
+    userName: {
+        type: String,
+    },
+    userEmail: {
+        type: String,
+    },
     productsDetails: [
         {
             productId: String,

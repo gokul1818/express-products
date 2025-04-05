@@ -93,4 +93,20 @@ const removeProduct = async (req, res) => {
         console.log(error.message)
     }
 }
-module.exports = { createProduct, updateProduct, removeProduct, getAllProducts, getProductsById }
+const searchProducts = async (req, res) => {
+    const { searchTerm } = req.query;
+    await Products.find({ productName: { $regex: searchTerm, $options: "i" } })
+        .then((products) => {
+            if (products.length === 0) {
+                return res.status(200).json({ message: "No products found" });
+            }
+            return res.status(200).json(products);
+        })
+        .catch((error) => {
+            console.error("Error searching products:", error.message);
+            return res.status(500).json({ message: "Server error" });
+        });
+
+}
+
+module.exports = { createProduct, updateProduct, removeProduct, getAllProducts, getProductsById, searchProducts }
